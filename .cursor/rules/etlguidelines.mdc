@@ -1,0 +1,167 @@
+---
+description: ETL Job Refactoring Guidelines
+globs: {     "globs": {         "python_files": [             "src/**/*.py",             "config/**/*.py",             "tests/**/*.py",             "file_standardization_job.py"         ],         "config_files": [             "config/settings.py",             "config/queries.py"         ],         "source_files": [             "src/database/*.py",             "src/etl/*.py",             "src/models/*.py",             "src/business/*.py",             "src/validation/*.py",             "src/utils/*.py"         ],         "test_files": [             "tests/**/*_test.py",             "tests/**/test_*.py"         ],         "exclude": [             "**/__pycache__/**",             "**/*.pyc",             "**/.pytest_cache/**",             "**/venv/**",             "**/env/**",             "**/.env/**",             "**/build/**",             "**/dist/**",             "**/*.egg-info/**"         ],         "schema_files": [             "src/models/schemas/*.json",             "config/schemas/*.json"         ],         "sql_files": [             "config/sql/*.sql"         ]     },     "file_associations": {         ".py": "python",         ".sql": "sql",         ".json": "json"     },     "watch_patterns": [         "src/**/*.py",         "config/**/*.py",         "tests/**/*.py"     ],     "formatting": {         "python": {             "indent_size": 4,             "max_line_length": 100,             "quote_type": "single"         }     } }
+---
+
+# Your rule content
+
+Core Principles
+
+Functionality Preservation
+
+All existing business logic from file_standardization_2025-02-03.py must be maintained
+Processing flow and data validation rules must remain unchanged
+Error handling and logging patterns should be preserved
+File processing status tracking must work the same way
+
+
+
+Naming Conventions
+
+DataFrames
+
+Main processing DataFrame: data_df
+Transformed data: transformed_df
+Validation results: validation_df
+Temporary results: temp_df
+Schema-specific frames: [entity_type]_df (e.g., stock_df, sales_df)
+
+
+Functions
+
+Extractors: extract_[source]_data
+Transformers: transform_[entity]_data
+Validators: validate_[rule_type]
+Loaders: load_[entity]_data
+Utilities: util_[purpose]
+
+
+Variables
+
+Configuration: CONFIG_[PURPOSE]
+Constants: CONSTANT_[PURPOSE]
+Temporary variables: temp_[purpose]
+Status flags: is_[condition]
+
+
+
+Module Organization
+
+Config Module (config/)
+
+Database credentials
+AWS configurations
+Processing rules
+SQL queries
+Schema definitions
+
+
+ETL Module (src/etl/)
+
+File extraction logic
+Data transformation rules
+Loading procedures
+Status tracking
+
+
+Models Module (src/models/)
+
+Data structure definitions
+Schema validations
+Type conversions
+
+
+Business Module (src/business/)
+
+Business validation rules
+Data transformation logic
+Special case handling
+
+
+Database Module (src/database/)
+
+Connection management
+Query execution
+Transaction handling
+Error recovery
+
+
+
+Required Functionality
+
+File Processing
+
+S3 file reading
+Schema validation
+Data transformation
+PostgreSQL loading
+Status updates
+
+
+Validation Rules
+
+Schema compliance
+Business rule validation
+Data type checking
+Mandatory field validation
+
+
+Error Handling
+
+Exception capture
+Error logging
+Transaction rollback
+Status updates
+
+
+Logging
+
+Operation tracking
+Error recording
+Performance metrics
+Status updates
+
+
+
+Database Interactions
+
+Tables
+
+Maintain existing table structures
+Preserve index definitions
+Keep foreign key relationships
+Maintain temporary table logic
+
+
+Queries
+
+Preserve existing query logic
+Maintain transaction boundaries
+Keep batch processing approach
+
+
+Performance Considerations
+
+Batch Processing
+
+Maintain existing batch sizes
+Preserve memory management
+Keep processing checkpoints
+Maintain cleanup procedures
+
+
+Resource Usage
+
+Monitor memory consumption
+Track processing time
+Manage database connections
+Handle S3 interactions efficiently
+
+
+
+Additional Notes
+
+Code changes should prioritize readability and maintainability
+Document any structural improvements
+Maintain AWS Glue compatibility
+Preserve existing monitoring capabilities
